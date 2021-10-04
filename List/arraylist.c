@@ -106,7 +106,7 @@ void displayArrayList(ArrayList* pList){
 ArrayListNode* getALElement(ArrayList* pList, int position){
   
   if (pList != NULL || position < pList->currentElementCount)
-    return (&pList->pElement[position - 1]);
+    return (&pList->pElement[position]);
   else
     return NULL;
 }
