@@ -3,20 +3,21 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
+#include <ctype.h>
 
 // LinkedList's Node
 typedef struct ListNodeType
 {
-	int coef; // 계수
-	int degree; //차수
-	struct ListNodeType* pLink;//next node
+    int coef; // 계수
+    int degree; //차수
+    struct ListNodeType* pLink;//next node
 } ListNode;
 
 // LinkedList
 typedef struct LinkedListType
 {
-	int currentElementCount;	// 항
-	ListNode *headerNode;		// Header Node
+    int currentElementCount;    // 항
+    ListNode *headerNode;        // Header Node
 } LinkedList;
 
 // create LinkedList
@@ -25,54 +26,51 @@ LinkedList* createLinkedList();
 // add element to LinkedList
 int addLLElement(LinkedList* pList, int coef, int degree);
 
-// remove element from LinkedList
-//int removeLLElement(LinkedList* pList, int degree);
-
 // analyze the polynomial
-//int analyze_expression();
+int analyze_polynomial();
 
 // calculate the polynomial
 int cal_polynomial(LinkedList *pList, int x);
 
 int main(){
-	LinkedList *List = NULL;
-	int answer = 0;
+    LinkedList *List = NULL;
+    int answer = 0;
 
-	List = createLinkedList();
-	if (List){
-		addLLElement(List, 6, 6);
-		addLLElement(List, 4, 5);
-		addLLElement(List, 2, 2);
-	}
-	answer =cal_polynomial(List ,1);
-	printf ("answer is %d\n", answer);
+    List = createLinkedList();
+    if (List){
+        addLLElement(List, 6, 6);
+        addLLElement(List, 4, 5);
+        addLLElement(List, 2, 2);
+    }
+    answer =cal_polynomial(List ,1);
+    printf ("answer is %d\n", answer);
 }
 
 LinkedList* createLinkedList(){
-	LinkedList* ret = NULL;
-	ret = (LinkedList *)malloc(sizeof(LinkedList));
+    LinkedList* ret = NULL;
+    ret = (LinkedList *)malloc(sizeof(LinkedList));
 
-	if (ret != NULL){
+    if (ret != NULL){
     ret->currentElementCount = 0;
     ret->headerNode = NULL;
   }
 
-	return ret;
+    return ret;
 }
 
 int addLLElement(LinkedList* pList, int coef, int degree){
-	int i = -1;
-	ListNode* preNode;
-	ListNode* newNode;
+    int i = -1;
+    ListNode* preNode;
+    ListNode* newNode;
 
-	if (pList != NULL){
+    if (pList != NULL){
     //full List case
     if (pList->currentElementCount == 0)
       pList->headerNode = (ListNode *)malloc(sizeof(ListNode));
     
     //set preNode pList's headerNode and move to the latest Node
     preNode = pList->headerNode;
-    while(++i <= pList->currentElementCount)
+    while(++i < pList->currentElementCount)
       preNode = preNode->pLink;
     
     // set newNode
@@ -82,7 +80,6 @@ int addLLElement(LinkedList* pList, int coef, int degree){
     newNode->pLink = NULL;
 
     //add newnode to List
-    newNode->pLink = preNode->pLink;
     preNode->pLink = newNode;
     pList->currentElementCount++;
     return true;
@@ -104,3 +101,26 @@ int cal_polynomial(LinkedList *pList, int x){
   }
   return ret;
 }
+
+/*int analyze_polynomial(LinkedList *pList, char *str){
+    int i = -1, cnt = 0;
+    char **tmp;
+    
+    while (str[++i]){
+        if (str[i] == '+' || str[i] == '-')
+            cnt++;
+    }
+    
+    tmp = (char **)malloc(sizeof(char *) * cnt);
+    *tmp = (char *)malloc(sizeof(char) * 3);
+    
+    i = -1;
+    while (str[++i]){
+        if (i == 0 && isdigit(atoi(&str[i]))){
+            if (str[i + 1] == '+' || str[i + 1] == '-')
+                addLLElement(pList, atoi(&str[i]), 0);
+            els
+        }
+    }
+}
+*/
