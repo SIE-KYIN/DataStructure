@@ -1,31 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h> 
-#define TRUE		1
-#define FALSE		0
-
-typedef struct DoublyListNodeType
-{
-	int data;
-	struct DoublyListNodeType* pLLink;
-	struct DoublyListNodeType* pRLink;
-} DoublyListNode;
-
-typedef struct DoublyListType
-{
-	int	currentElementCount;
-	DoublyListNode	headerNode;
-} DoublyList;
-
-DoublyList* createDoublyList();
-void deleteDoublyList(DoublyList* pList);
-int addDLElement(DoublyList* pList, int position, DoublyListNode element);
-int removeDLElement(DoublyList* pList, int position);
-void clearDoublyList(DoublyList* pList);
-int getDoublyListLength(DoublyList* pList);
-DoublyListNode* getDLElement(DoublyList* pList, int position);
-void displayDoublyList(DoublyList* pList);
+#include "doublylist.h"
 
 DoublyList* createDoublyList(void){
   DoublyList* D;
@@ -137,7 +110,22 @@ void displayDoublyList(DoublyList* pList){
     printf("원소가 없습니다.\n");
   }
 }
+void reverse(DoublyList **pList)
+{
+     DoublyListNode *tmp = NULL;
+     DoublyListNode *node = (*pList)->headerNode.pRLink;
 
+     while (node !=  NULL)
+     {
+       tmp = node->pLLink;
+       node->pLLink = node->pRLink;
+       node->pRLink = tmp;
+       node = node->pLLink;
+     }
+
+     if(tmp != NULL )
+        (*pList)->headerNode.pRLink = tmp->pLLink;
+}
 
 int main(int argc, char* argv[]) {
 
@@ -168,6 +156,8 @@ int main(int argc, char* argv[]) {
  		addDLElement(pList, 0, node);
 
  		displayDoublyList(pList);
+		reverse(&pList);
+		displayDoublyList(pList);
 
  		removeDLElement(pList, 0);
 

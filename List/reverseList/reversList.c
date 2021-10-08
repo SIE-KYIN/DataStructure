@@ -1,16 +1,18 @@
-void reverse(DoublyList** head_ref)
+void reverse(DoublyList **pList)
 {
-     DoublyListNode *temp = NULL; 
-     DoublyListNode *current = (*head_ref)->headerNode.pRLink;
-    
-     while (current !=  NULL)
+     DoublyListNode *tmp = NULL; 
+     DoublyListNode *node = (*pList)->headerNode.pRLink;
+   
+     (*pList)->headerNode.pRLink->pLLink = NULL;
+
+     while (node !=  NULL)
      {
-       temp = current->pLLink;
-       current->pLLink = current->pRLink;
-       current->pRLink = temp;             
-       current = current->pLLink;
+       tmp = node->pLLink;
+       node->pLLink = node->pRLink;
+       node->pRLink = tmp;             
+       node = node->pLLink;
      }
      
-     if(temp != NULL )
-        (*head_ref)->headerNode.pRLink = temp->pLLink;
+     if(tmp != NULL )
+        (*pList)->headerNode.pRLink = tmp->pLLink;
 }
